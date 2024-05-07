@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      p {
+        padding: 10px;
+        border: 1px solid red;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="button">更新文案</button>
+    <p id="text"></p>
+    <script type="text/javascript">
+      const button = document.getElementById("button");
+      const p = document.getElementById("text");
+      button.onclick = () => {
+        // 向 main 发送消息，将调用的函数传递过去
+        window.JSBridge.onReceiveMainMessage("updateData");
+      };
+
+      // 监听来自 main 的消息
+      window.JSBridge.onReceiveIframeMessage = (msg) => {
+        console.log("iframe 收到来自 main 的消息", msg);
+        text.innerHTML = msg;
+      };
+    </script>
+  </body>
+</html>

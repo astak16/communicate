@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style type="type/css">
+      iframe {
+        width: 500px;
+        height: 500px;
+        border: 1px solid red;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="button">向 iframe 发送消息</button>
+    <iframe id="iframe" src="./iframe.html"></iframe>
+
+    <script type="text/javascript">
+      const iframe = document.getElementById("iframe");
+      const button = document.getElementById("button");
+      button.onclick = () => {
+        iframe.contentWindow.JSBridge.onReceiveIframeMessage("我是 main");
+      };
+
+      iframe.contentWindow.JSBridge = {
+        onReceiveMainMessage: function (msg) {
+          console.log("main 接收到 iframe 发来的消息：", msg);
+        },
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <iframe id="iframe" src="./iframe.html"></iframe>
+    <script type="text/javascript">
+      const iframe = document.getElementById("iframe");
+      const worker = new Worker("./worker.js");
+
+      // 监听 worker 发来的消息
+      worker.addEventListener("message", (e) => {
+        console.log("main 接收来自 worker 的消息:", e.data);
+        // 像 iframe 发送消息
+        iframe.contentWindow.JSBridge.onReceiveIframeMessage(e.data);
+      });
+      iframe.contentWindow.JSBridge = {
+        // 接收来自 iframe 的消息
+        onReceiveMainMessage(msg) {
+          console.log("main 接收来自 iframe 的消息:", msg);
+          // 向 worker 发送消息
+          worker.postMessage(msg);
+        },
+      };
+    </script>
+  </body>
+</html>

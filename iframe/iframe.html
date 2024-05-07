@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    iframe
+    <button id="button">向 main 发送消息</button>
+    <script type="text/javascript">
+      const button = document.getElementById("button");
+      button.onclick = () => {
+        window.JSBridge.onReceiveMainMessage("我是 iframe");
+      };
+      window.JSBridge.onReceiveIframeMessage = function (msg) {
+        console.log("iframe 接收来自 native 的消息：", msg);
+      };
+    </script>
+  </body>
+</html>
