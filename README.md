@@ -4,7 +4,7 @@
 - 用 `iframe` 模拟 `webview`（渲染线程）
 - 用 `worker` 模拟 `jscore`（逻辑线程）
 
-![](./images/miniprogram-1.png)
+![miniprogram1](./images/miniprogram-1.png)
 
 我们先来看下他们之间的通信方式：
 
@@ -140,6 +140,8 @@ window.JSBridge = {
 </body>
 ```
 
+源码：[iframe-worker](https://github.com/astak16/communicate/blob/main/iframe/main.html)
+
 ### params
 
 `params` 形式的通信只适用于父向子通信：`localhost:5173/home?name=uccs&age=1`
@@ -193,6 +195,8 @@ onmessage = (e) => {
   console.log("接收来自 main 的消息:", e.data);
 };
 ```
+
+源码：[main-worker](https://github.com/astak16/communicate/blob/main/worker/main.html)
 
 ## iframe 与 worker 通信
 
@@ -316,7 +320,15 @@ setTimeout(() => {
 }, 1000);
 ```
 
+源码：[iframe-worker](https://github.com/astak16/communicate/blob/main/dual-threading/main.html)
+
+逻辑示意图如下：
+
+![miniprogram2](./images/miniprogram-2.png)
+
 ## 总结
 
 1. 在单线程架构中，逻辑线程的代码和渲染线程的都在主线程中，没有通信一说
 2. 在双线程架构中，逻辑线程、渲染线程、主线程都是各自独立的，无法直接访问，只能通过跨线程通信的方式进行访问
+
+源码：[communicate](https://github.com/astak16/communicate)
